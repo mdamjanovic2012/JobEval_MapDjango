@@ -2,4 +2,3 @@ Django==1.9
 google-api-python-client
 oauth2client
 jsonpickle==0.9.5
-httplib2

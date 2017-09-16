@@ -2,7 +2,6 @@ from django.db import models
 
 
 class GeoLocation(models.Model):
-    """ Simple representation of a marker """
     lat = models.CharField(max_length=30)
     lng = models.CharField(max_length=30)
     address = models.CharField(max_length=120)
