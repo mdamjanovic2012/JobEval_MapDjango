@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <script
+      src="https://code.jquery.com/jquery-2.2.4.min.js"
+      integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+      crossorigin="anonymous"></script>
+    <title>Simple Map</title>
+
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.png' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <script>
+      var GOOGLE_API_KEY = '{{ GOOGLE_API_KEY }}';
+      var initial_markers = [
+        {% for addr in addresses %}
+          {
+            'location':
+              {'lat': {{ addr.lat}},
+              'lng': {{ addr.lng }}},
+            'title': '{{ addr.address }} - ({{ addr.lat}}, {{ addr.lng}})'
+          },
+        {% endfor %}
+      ];
+    </script>
+    <script type="text/javascript" src="{% static 'app.js' %}"></script>
+    <script  async defer src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_API_KEY }}&callback=initMap"></script>
+    <script type="text/javascript" src="https://apis.google.com/js/client.js"></script>
+    <script type="text/javascript" src="http://spin.js.org/spin.min.js"></script>
+    <script type="text/javascript" src="http://spin.js.org/jquery.spin.js"></script>
+
+  </head>
+  <body>
+    <div id="map"></div>
+
+    <h1>Visited addresses</h1>
+    <ul class="visited-addresses">
+      {% for addr in addresses %}
+        <li><span data-lat="{{ addr.lat}}" data-lng="{{ addr.lng }}">{{ addr.address }} - ({{ addr.lat}}, {{ addr.lng}})</span></li>
+      {% endfor %}
+    </ul>
+
+    <button>Remove all markers</button>
+    <div class="spinner"></div>
+  </body>
+</html>
